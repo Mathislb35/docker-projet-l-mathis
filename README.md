@@ -1,31 +1,35 @@
-# Table des matières
+📑 Table des matières
 
-- [Objectif du projet](#objectif-du-projet)
-- [Structure du projet](#structure-du-projet)
-- [Description des services Docker](#description-des-services-docker)
-  - [1 Base de données MySQL](#base-de-données-mysql)
-  - [2 Application Web PHP](#application-web-php)
-  - [3 Adminer](#adminer)
-- [Fichier env](#fichier-env)
-- [Instructions pour lancer le projet](#instructions-pour-lancer-le-projet)
-- [Accès aux services](#accès-aux-services)
-  - [1 Application web PHP](#application-web-php-1)
-  - [2 Adminer](#adminer-1)
-- [Construire l’image en production](#construire-image-en-production)
-- [Conclusion](#conclusion)
+🎯 Objectif du projet
 
-# Objectif du projet
+🛠️ Technologies utilisées
 
-Ce projet propose une application web permettant :
+📂 Structure du projet
 
-de tester la connexion à une base MySQL,
+🐳 Description des services Docker
 
-de générer automatiquement 10 noms de groupes aléatoires sous la forme :
-The {adjective} {noun},
+🔒 Fichier env
 
-les adjectifs et noms proviennent d’une base MySQL initialisée avec init.sql.
+▶️ Instructions de lancement
 
-Technologies utilisées
+🌐 Accès aux services
+
+🏗️ Construction de l’image de production
+
+🧾 Conclusion
+
+🎯 Objectif du projet
+
+Cette application web permet :
+
+de tester la connexion MySQL ;
+
+de générer 10 noms de groupes aléatoires du type :
+The {adjective} {noun} ;
+
+les données proviennent d’une base MySQL initialisée via init.sql.
+
+🛠️ Technologies utilisées
 
 PHP 8 + Apache
 
@@ -35,65 +39,61 @@ Adminer
 
 Docker Compose
 
-# Structure du projet
-. <br>
-├─ compose.yaml <br>
-├─ .env <br>
-├─ README.md <br>
-├─ web/ <br>
-│  ├─ Dockerfile <br>
-│  └─ index.php <br>
-└─ db/ <br>
+📂 Structure du projet
+.
+├─ compose.yaml
+├─ .env
+├─ README.md
+├─ web/
+│  ├─ Dockerfile
+│  └─ index.php
+└─ db/
    └─ init.sql
 
-# Description des services Docker
-## Base de données MySQL
+🐳 Description des services Docker
+1️⃣ Base de données MySQL
 
-Basée sur l’image officielle mysql:8.0
+Image : mysql:8.0
 
-Initialise automatiquement les tables et données via db/init.sql
+Initialisation automatique via db/init.sql
 
 Contient au minimum 10 adjectifs et 10 noms
 
-Stockée dans un volume db_data
+Stockage dans un volume db_data
 
-N’expose aucun port vers l’hôte (plus sécurisé)
+Port non exposé → plus sécurisé
 
-## Application Web PHP
+2️⃣ Application Web PHP
 
-Construite à partir du Dockerfile dans web/
-
-Utilise php:8.2-apache
+Basée sur php:8.2-apache
 
 Communique avec MySQL via PDO
 
-Page web offrant :
+Propose deux actions :
 
-un bouton pour tester la connexion MySQL
+✔️ Tester la connexion MySQL
 
-un bouton pour générer 10 noms aléatoires
+🎲 Générer 10 noms de groupes
 
-Accessible via :
- http://localhost:8085
+Accessible :
+👉 http://localhost:8085
 
-## Adminer
+3️⃣ Adminer
 
-Interface web SQL légère
+Interface SQL légère
 
-Serveur configuré automatiquement sur db
+Connectée automatiquement à MySQL
 
-Accessible via :
- http://localhost:8086
+Accessible :
+👉 http://localhost:8086
 
-# Fichier env
+🔒 Fichier .env
 
-Ce fichier contient les paramètres du projet :
-
-NE JAMAIS versionner ce fichier dans Git !
-Il contient des mots de passe et des variables sensibles.
+⚠️ Ne jamais versionner ce fichier !
+Il contient des mots de passe et informations sensibles.
 
 Exemple :
-<pre>
+
 MYSQL_ROOT_PASSWORD=rootpassword
 MYSQL_DATABASE=bandnames
 MYSQL_USER=banduser
@@ -105,22 +105,20 @@ DB_PORT=3306
 DB_NAME=bandnames
 DB_USER=banduser
 DB_PASSWORD=bandpass
-</pre>
 
-# Instructions pour lancer le projet
+▶️ Instructions de lancement
+1. Vérifier que Docker fonctionne
 
-Ces instructions fonctionnent en copier-coller sans modification.
+Docker Desktop activé
 
- Vérifier que Docker fonctionne
+Sous WSL2 : intégration activée
 
-Docker Desktop doit être lancé.
-Sous WSL2, l’intégration WSL doit être activée.
+2. Créer le fichier .env
+nano .env
 
- Créer un fichier .env
-<pre>nano .env</pre>
 
-Y coller :
-<pre>
+Coller :
+
 MYSQL_ROOT_PASSWORD=rootpassword
 MYSQL_DATABASE=bandnames
 MYSQL_USER=banduser
@@ -132,34 +130,22 @@ DB_PORT=3306
 DB_NAME=bandnames
 DB_USER=banduser
 DB_PASSWORD=bandpass
-</pre>
 
-Enregistrer avec :
-CTRL+O → Entrée → CTRL+X
-
- Lancer les services
+3. Lancer les services
 docker compose up --build
 
-Lorsque MySQL, Apache et Adminer sont lancés, l'application est prête.
+🌐 Accès aux services
+💻 Application Web PHP
 
-# Accès aux services
+👉 http://localhost:8085
 
-Après le lancement :
-Ouvre ton navigateur.
+Fonctionnalités :
 
-## Application web PHP
+« Tester la connexion MySQL »
 
- http://localhost:8085
+« Générer 10 noms de groupes »
 
-Ce que tu dois voir :
-
-Une page avec deux boutons :
-
-Tester la connexion à la base
-➝ Affiche : "Communication avec la base de données établie"
-
-Générer 10 noms de groupe
-➝ Affiche des noms comme :
+Exemples générés :
 
 The Golden Wolves
 
@@ -167,46 +153,36 @@ The Silent Rockets
 
 The Broken Biscuits
 
-## Adminer
+🗄️ Adminer
 
-http://localhost:8086
+👉 http://localhost:8086
 
-Connexion :
+Champ	Valeur
+Serveur	db
+Utilisateur	banduser
+Mot de passe	bandpass
+Base	bandnames
 
-Serveur : db
+Tables visibles : adjectives, nouns
 
-Utilisateur : banduser
-
-Mot de passe : bandpass
-
-Base : bandnames
-
-Ce que tu dois voir :
-
-Table adjectives
-
-Table nouns
-
-Chacune avec 10 valeurs
-
-# Construire image en production
+🏗️ Construction de l’image de production
 docker build -t bandnamesgenerator-php:1.0.0 ./web
 
 
-Cette image peut être poussée vers un registre ou utilisée en production.
+Vous pouvez ensuite pousser l’image sur un registre Docker.
 
-# Conclusion
+🧾 Conclusion
 
 Ce projet permet de :
 
-gérer une base MySQL initialisée automatiquement
+comprendre l’orchestration Docker Compose
 
-développer une application PHP simple
+manipuler une base MySQL initialisée automatiquement
 
-créer une image Docker personnalisée
+développer une mini-app PHP
 
-orchestrer trois services via Docker Compose
+générer une image de production
 
-utiliser un fichier .env propre et externalisé
+travailler proprement avec un fichier .env
 
-Tout est conforme aux attentes du sujet.
+Tout est conforme aux attentes pédagogiques du projet.
