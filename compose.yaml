@@ -1,0 +1,50 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: bandnames_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    container_name: bandnames_web
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      WEB_PORT: ${WEB_PORT}
+    ports:
+      - "8085:${WEB_PORT}"
+    depends_on:
+      - db
+    develop:
+      watch:
+        - action: sync
+          path: ./web
+          target: /var/www/html
+          ignore:
+            - vendor/
+            - node_modules/
+
+  admin:
+    image: adminer:latest
+    container_name: bandnames_admin
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - "8086:8080"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+
