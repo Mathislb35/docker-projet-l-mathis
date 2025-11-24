@@ -32,15 +32,17 @@ Ce projet propose une application web permettant :
 
 ## Structure du projet
 
+```
 .
 ├─ compose.yaml
 ├─ .env
 ├─ README.md
 ├─ web/
-│ ├─ Dockerfile
-│ └─ index.php
+│  ├─ Dockerfile
+│  └─ index.php
 └─ db/
-└─ init.sql
+   └─ init.sql
+```
 
 ## Description des services Docker
 
@@ -149,3 +151,4 @@ Ce projet permet de :
 - orchestrer plusieurs services avec Docker Compose,
 - travailler proprement avec un fichier `.env` externalisé,
 - générer une image Docker prête pour la production.
+
